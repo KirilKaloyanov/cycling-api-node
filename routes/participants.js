@@ -9,14 +9,16 @@ router.post("/", async (req, res) => {
     for (let item of error.details) {
       ex.errors[item.path[0]] = item.message;
     }
-    res.send(ex);
+    res.status(400).send(ex);
     return;
   }
+
   let participant = await Participant.findOne({ email: req.body.email });
   if (participant)
-    return res.send({
+    return res.status(400).send({
       errors: { emailRegistered: "Email already registered" },
     });
+
   try {
     participant = new Participant({
       firstName: req.body.firstName,
@@ -27,7 +29,7 @@ router.post("/", async (req, res) => {
     participant = await participant.save();
     res.send(participant);
   } catch (ex) {
-    res.send(ex);
+    res.status(400).send(ex);
   }
 });
 
