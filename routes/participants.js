@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
       organisation: req.body.organisation,
     });
     participant = await participant.save();
-    res.send(participant);
+    res.send(participant._id);
   } catch (ex) {
     res.status(400).send(ex);
   }
