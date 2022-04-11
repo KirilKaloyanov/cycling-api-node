@@ -38,4 +38,8 @@ router.get("/", async (req, res) => {
   res.send(participants);
 });
 
+router.get("/hello", async (req, res) => {
+  res.send("Hello");
+});
+
 module.exports = router;
