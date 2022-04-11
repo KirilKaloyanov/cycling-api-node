@@ -1,11 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const config = require("config");
 const participants = require("./routes/participants");
 
 const app = express();
+const db = config.get("db");
 mongoose
-  .connect("mongodb://localhost/cycling")
+  .connect(db)
   .then(() => console.log("Connected to MongoDB..."))
   .catch((err) => console.error("Could not connect", err));
 
