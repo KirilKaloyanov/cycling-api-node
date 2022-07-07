@@ -4,7 +4,7 @@ const { Participant, validateParticipant } = require("../models/participant");
 
 router.post("/", async (req, res) => {
   const { error } = validateParticipant(req.body);
-  if (error) {
+  if (error && error.details[0].path[0] !== "phone") {
     const ex = { errors: {} };
     for (let item of error.details) {
       ex.errors[item.path[0]] = item.message;
@@ -25,6 +25,7 @@ router.post("/", async (req, res) => {
       lastName: req.body.lastName,
       email: req.body.email,
       organisation: req.body.organisation,
+      phone: req.body.phone,
     });
     participant = await participant.save();
     res.send(participant._id);
